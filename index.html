@@ -35,12 +35,35 @@
         <a-asset-item id="boat-obj" src="boat.obj"></a-asset-item>
         <a-asset-item id="mailbox-mtl" src="mailbox.mtl"></a-asset-item>
         <a-asset-item id="mailbox-obj" src="mailbox.obj"></a-asset-item>
+        <a-asset-item id="duck-mtl" src="duck.mtl"></a-asset-item>
+        <a-asset-item id="duck-obj" src="duck.obj"></a-asset-item>
         <img id="sky" src="sky.jpg">
         <img id="water" src="water.1024x512.jpg">
         <img id="bark" src="bark.jpg">
         <img id="sign" src="sign.png">
         <img id="side" src="conc.512x512.jpg">
+        <img id="music-icon" src="music.jpg"/>
+        <img id="duck-icon" src="duck.jpg"/>
+        <img id="info-icon" src="info.jpg"/>
+
+        <a-mixin id="map" geometry="primitive: plane" material="src: #info-icon" collapse-model scale="1.5 1.5 0.1"></a-mixin>
+        <a-mixin id="map-spine" rotation="0 0 0" n-skeleton-parent="part: spine;" position="0 0.65 -2"></a-mixin>
+
+        <a-mixin id="duck" cached-obj-model="obj:#duck-obj;mtl:#duck-mtl" collapse-model scale="1 1 1"></a-mixin>
+        <a-mixin id="duck-spine" rotation="0 0 0" n-skeleton-parent="part: spine;" position="0 0 0" sync sync-n-skeleton-parent></a-mixin>
+
       </a-assets>
+
+
+      <a-entity id="menu1" n-text="fontSize: 3; text: <#0000BB>Duck Crossing" position='-0.81 0.16 -1.60' rotation="-25 0 0" scale="0.15 0.15 0.05" n-cockpit-parent></a-entity>
+
+      <a-entity geometry="primitive: box" material="src: #side" position='-0.81 0.075 -1.595' rotation="-25 0 0" scale="0.6 0.25 0.03" n-cockpit-parent altspace-cursor-collider="enabled: true"></a-entity>
+
+      <a-entity geometry="primitive: box" material="src: #music-icon" position='-1 0.05 -1.55' rotation="-25 0 0" scale="0.15 0.15 0.03" n-cockpit-parent wire="on: click; emit: soundt; targets: #wav" altspace-cursor-collider="enabled: true"></a-entity>
+
+      <a-entity id="map-spine-instantiator" geometry="primitive: box" material="src: #info-icon" position='-0.81 0.05 -1.55' rotation="-25 0 0" scale="0.15 0.15 0.03" n-cockpit-parent instantiator="on: click; group: mapg; mixin: map map-spine" altspace-cursor-collider="enabled: true"></a-entity>
+
+      <a-entity id="duck-spine-instantiator" geometry="primitive: box" material="src: #duck-icon" position='-0.6575 0.05 -1.55' rotation="-25 0 0" scale="0.15 0.15 0.03" n-cockpit-parent instantiator="on: click; group: duckbb; mixin: duck duck-spine" altspace-cursor-collider="enabled: true"></a-entity>
 
       <a-entity position="0 0 0" rotation="0 90 0">
 
@@ -53,13 +76,13 @@
       <!--a-entity id="shakes" position="32 10 0" n-sound="src: shake.wav; on: shake; volume: 1; spatialBlend: 0; rolloff: logarithmic; minDistance: 400; maxDistance: 500"></a-entity-->
       <a-obj-model scale="3 3 3" src="#street-obj" mtl="#street-mtl" wrapping position="0 0.04 0" n-mesh-collider="type: environment; convex: false"></a-obj-model>
       <a-obj-model scale="3 3 3" src="#face2-obj" mtl="#face2-mtl" wrapping position="0 0.04 0"></a-obj-model>
-      <a-entity position="0 0 0">
+      <a-entity id="wav" position="0 0 0">
         <a-entity id="song" position="32 10 0" n-sound="src: music.wav; loop: true; autoplay: true; volume: 0.1; rolloff: cosine; minDistance: 1; maxDistance: 300"></a-entity>
-        <a-entity geometry="primitive: box" material="color: green" position="8.64 3.2 -1497.09" scale="0.1 0.1 0.03" rotation="0 -115.7374746164263 0"></a-entity>
-        <a-entity geometry="primitive: box" material="color: red" position="8.64 3.2 2.91" scale="0.1 0.1 0.03" rotation="0 -115.7374746164263 0"></a-entity>
-        <a-entity geometry="primitive: box" material="color: green" position="66.6 28.93 -1513.35" scale="0.1 0.1 0.03" rotation="0 0 0"></a-entity>
-        <a-entity geometry="primitive: box" material="color: red" position="66.6 28.93 -13.35" scale="0.1 0.1 0.03" rotation="0 0 0"></a-entity>
-        <a-animation id="wav" attribute="position" begin="on: click" dur="0.000001" easing="linear" repeat="0" fill="forwards" direction="alternate" from="0 0 0" to="0 0 1500"></a-animation>
+        <a-entity geometry="primitive: box" material="color: green" position="8.64 3.2 -1497.09" scale="0.1 0.1 0.03" rotation="0 -115.7374746164263 0" wire="on: click; emit: soundt; targets: #wav"></a-entity>
+        <a-entity geometry="primitive: box" material="color: red" position="8.64 3.2 2.91" scale="0.1 0.1 0.03" rotation="0 -115.7374746164263 0" wire="on: click; emit: soundt; targets: #wav"></a-entity>
+        <a-entity geometry="primitive: box" material="color: green" position="66.6 28.93 -1513.35" scale="0.1 0.1 0.03" rotation="0 0 0" wire="on: click; emit: soundt; targets: #wav"></a-entity>
+        <a-entity geometry="primitive: box" material="color: red" position="66.6 28.93 -13.35" scale="0.1 0.1 0.03" rotation="0 0 0" wire="on: click; emit: soundt; targets: #wav"></a-entity>
+        <a-animation id="wav" attribute="position" begin="on: soundt" dur="0.000001" easing="linear" repeat="0" fill="forwards" direction="alternate" from="0 0 0" to="0 0 1500"></a-animation>
       </a-entity>
       <a-cylinder position="8.78 2.35 2.95" src="#bark" scale="0.09 3 0.09" segments-height="1" segments-radial="8"></a-cylinder>
       <a-plane position="8.64 3.28 2.91" src="#sign" scale="0.46 0.69 0.46" rotation="0 -115.7374746164263 0"></a-plane>
@@ -339,5 +362,10 @@
 
 
     </a-scene>
+    <script>
+    altspace.getUser().then(function(user){
+      document.querySelector('#menu1').setAttribute('n-text', {fontSize:3,  text: '<#0000BB>Duck Crossing:  ' + user.displayName });
+    });
+    </script>
   </body>
 </html>
