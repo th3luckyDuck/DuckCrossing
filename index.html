@@ -10,6 +10,19 @@
     <script src="https://sdk.altvr.com/libs/altspace.js/1.0.0/altspace.min.js"></script>
     <script src="https://cdn.rawgit.com/norybiak/Aframe-gltf/v0.1.1/dist/aframe-gltf.js"></script>
     <script src="js/cached-model.js"></script>
+    <script>
+			// n-skeleton-parent only works with root meshes at the moment. Since most model loaders use a root
+			// container object, we need to collapse the model so that n-skeleton-parent can access the mesh directly.
+			AFRAME.registerComponent('collapse-model', {
+				init: function () {
+					this.el.addEventListener('model-loaded', function () {
+						this.el.setObject3D('mesh', this.el.object3DMap.mesh.children[0]);
+						// setObject3D emits this event in a-frame 0.4.0
+						this.el.emit('object3dset', {type: 'mesh'});
+					}.bind(this));
+				}
+			});
+		</script>
 
 </head>
   <body>
