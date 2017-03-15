@@ -11,18 +11,18 @@
     <script src="https://cdn.rawgit.com/norybiak/Aframe-gltf/v0.1.1/dist/aframe-gltf.js"></script>
     <script src="js/cached-model.js"></script>
     <script>
-      // n-skeleton-parent only works with root meshes at the moment. Since most model loaders use a root
-      // container object, we need to collapse the model so that n-skeleton-parent can access the mesh directly.
-      AFRAME.registerComponent('collapse-model', {
-        init: function () {
-          this.el.addEventListener('model-loaded', function () {
-            this.el.setObject3D('mesh', this.el.object3DMap.mesh.children[0]);
-            // setObject3D emits this event in a-frame 0.4.0
-            this.el.emit('object3dset', {type: 'mesh'});
-          }.bind(this));
-        }
-      });
-    </script>
+			// n-skeleton-parent only works with root meshes at the moment. Since most model loaders use a root
+			// container object, we need to collapse the model so that n-skeleton-parent can access the mesh directly.
+			AFRAME.registerComponent('collapse-model', {
+				init: function () {
+					this.el.addEventListener('model-loaded', function () {
+						this.el.setObject3D('mesh', this.el.object3DMap.mesh.children[0]);
+						// setObject3D emits this event in a-frame 0.4.0
+						this.el.emit('object3dset', {type: 'mesh'});
+					}.bind(this));
+				}
+			});
+		</script>
 
 </head>
   <body>
@@ -58,13 +58,12 @@
         <img id="music-icon" src="music.jpg"/>
         <img id="duck-icon" src="duck.jpg"/>
         <img id="info-icon" src="info.jpg"/>
-        <img id="orng" src="orng.jpg"/>
 
         <a-mixin id="map" geometry="primitive: plane" material="src: #info-icon" collapse-model scale="1.5 1.5 0.1"></a-mixin>
-        <a-mixin id="map-spine" rotation="0 0 0" n-skeleton-parent="part: spine;" position="0 0.65 -2"></a-mixin>
+        <a-mixin id="map-spine" rotation="0 0 0" n-skeleton-parent="part: spine;" position="0 0.65 -2" sync sync-n-skeleton-parent></a-mixin>
 
         <a-mixin id="duck" obj-model="obj: #duck-obj; mtl: #duck-mtl" collapse-model scale="1 1 1"></a-mixin>
-        <a-mixin id="duck-spine" rotation="0 0 0" n-skeleton-parent="part: spine;" position="0 0 0" sync sync-n-skeleton-parent></a-mixin>
+        <a-mixin id="duck-spine" rotation="0 -90 0" n-skeleton-parent="part: spine;" position="0 -0.4 -0.05" sync sync-n-skeleton-parent></a-mixin>
 
       </a-assets>
 
@@ -88,8 +87,8 @@
       <a-entity id="ground3" position="0 0 0">
       <!--a-animation attribute="position" begin="on: shake" dur="250" easing="linear" repeat="55" fill="backwards" from="0 0 0" to="0.5 0 0"></a-animation-->
       <!--a-entity id="shakes" position="32 10 0" n-sound="src: shake.wav; on: shake; volume: 1; spatialBlend: 0; rolloff: logarithmic; minDistance: 400; maxDistance: 500"></a-entity-->
-      <a-obj-model scale="3 3 3" src="#street-obj" mtl="#street-mtl" position="0 0.04 0" n-mesh-collider="type: environment; convex: false"></a-obj-model>
-      <a-obj-model scale="3 3 3" src="#face2-obj" mtl="#face2-mtl" position="0 0.04 0"></a-obj-model>
+      <a-obj-model scale="3 3 3" src="#street-obj" mtl="#street-mtl" wrapping position="0 0.04 0" n-mesh-collider="type: environment; convex: false"></a-obj-model>
+      <a-obj-model scale="3 3 3" src="#face2-obj" mtl="#face2-mtl" wrapping position="0 0.04 0"></a-obj-model>
       <a-entity id="wav" position="0 0 0">
         <a-entity id="song" position="32 10 0" n-sound="src: music.wav; loop: true; autoplay: true; volume: 0.1; rolloff: cosine; minDistance: 1; maxDistance: 300"></a-entity>
         <a-entity geometry="primitive: box" material="color: green" position="8.64 3.2 -1497.09" scale="0.1 0.1 0.03" rotation="0 -115.7374746164263 0" wire="on: click; emit: soundt; targets: #wav"></a-entity>
@@ -117,15 +116,15 @@
       <a-box position="4.66 1.38 8.22" src="#side" rotation="0 0 90" scale="0.46 7.69 9.76" color="#d6d6d6" n-mesh-collider="type:environment;convex:false"></a-box>
      
       <a-entity position="8.5 1.3 -3.5" rotation="0 180 0">
-        <cached-obj-model scale="0.9 1.5 0.9" src="#mailbox-obj" mtl="#mailbox-mtl" rotation="0 0 0" position="0 0 0" n-mesh-collider="type: environment; convex: false"></cached-obj-model>
+        <cached-obj-model scale="0.9 1.5 0.9" src="#mailbox-obj" mtl="#mailbox-mtl" rotation="0 0 0" wrapping position="0 0 0" n-mesh-collider="type: environment; convex: false"></cached-obj-model>
         <a-entity id="box1" position="0 0 0" n-box-collider="isTrigger:true; type:environment; size: 0.5 0.5 0.5" n-container="capacity:1" wire="on: container-full; emit: day; targets: #skybox"></a-entity>
       </a-entity>
       <a-entity position="8.5 1.3 -28.75" rotation="0 180 0">
-        <cached-obj-model scale="0.9 1.5 0.9" src="#mailbox-obj" mtl="#mailbox-mtl" rotation="0 0 0" position="0 0 0" n-mesh-collider="type: environment; convex: false"></cached-obj-model>
+        <cached-obj-model scale="0.9 1.5 0.9" src="#mailbox-obj" mtl="#mailbox-mtl" rotation="0 0 0" wrapping position="0 0 0" n-mesh-collider="type: environment; convex: false"></cached-obj-model>
         <a-entity id="box2" position="0 0 0" n-box-collider="isTrigger:true; type:environment; size: 0.5 0.5 0.5" n-container="capacity:1" wire="on: container-full; emit: night; targets: #skybox"></a-entity>
       </a-entity>
       <!--a-entity id="shakebasket" position="8.5 1.3 31" rotation="0 180 0">
-        <cached-obj-model scale="0.9 1.5 0.9" src="#mailbox-obj" mtl="#mailbox-mtl" rotation="0 0 0" position="0 0 0" n-mesh-collider="type: environment; convex: false"></cached-obj-model>
+        <cached-obj-model scale="0.9 1.5 0.9" src="#mailbox-obj" mtl="#mailbox-mtl" rotation="0 0 0" wrapping position="0 0 0" n-mesh-collider="type: environment; convex: false"></cached-obj-model>
         <a-entity id="box2" position="0 0 0" n-box-collider="isTrigger:true; type:environment; size: 0.5 0.5 0.5" n-container="capacity:1" wire="on: container-full; emit: shake; targets: #ground1, #ground2, #ground3, #shakes, #shakebasket"></a-entity>
         <a-animation attribute="position" begin="on: shake" dur="300000" easing="linear" repeat="0" fill="backwards" from="0 0 0" to="0 -30000 0"></a-animation>
       </a-entity-->
@@ -155,189 +154,189 @@
       </a-entity>
       </a-entity>
 
-      <cached-obj-model scale="3.5 3.5 3.5" src="#boat-obj" mtl="#boat-mtl" position="34.39 0.04 0" rotation="0 90 0" n-mesh-collider="type: environment; convex: false">
+      <cached-obj-model scale="3.5 3.5 3.5" src="#duck-obj" mtl="#duck-mtl" wrapping position="34.39 0.04 0" n-mesh-collider="type: environment; convex: false">
         <a-animation attribute="position" dur="50000" easing="linear" repeat="indefinite" fill="forwards" from="34.39 0.9 -200" to="34.39 0.9 50"></a-animation>
       </cached-obj-model>
-      <cached-obj-model scale="3.5 3.5 3.5" src="#boat-obj" mtl="#boat-mtl" position="34.39 0.04 0" n-mesh-collider="type: environment; convex: false">
+      <cached-obj-model scale="3.5 3.5 3.5" src="#boat-obj" mtl="#boat-mtl" wrapping position="34.39 0.04 0" n-mesh-collider="type: environment; convex: false">
         <a-animation attribute="position" dur="50000" easing="linear" repeat="indefinite" fill="forwards" from="34.39 0.9 -150" to="34.39 0.9 100"></a-animation>
       </cached-obj-model>
-      <cached-obj-model scale="3.5 3.5 3.5" src="#boat-obj" mtl="#boat-mtl" position="34.39 0.04 0" n-mesh-collider="type: environment; convex: false">
+      <cached-obj-model scale="3.5 3.5 3.5" src="#boat-obj" mtl="#boat-mtl" wrapping position="34.39 0.04 0" n-mesh-collider="type: environment; convex: false">
         <a-animation attribute="position" dur="50000" easing="linear" repeat="indefinite" fill="forwards" from="34.39 0.9 -100" to="34.39 0.9 150"></a-animation>
       </cached-obj-model>
-      <cached-obj-model scale="3.5 3.5 3.5" src="#boat-obj" mtl="#boat-mtl" position="34.39 0.04 0" n-mesh-collider="type: environment; convex: false">
+      <cached-obj-model scale="3.5 3.5 3.5" src="#boat-obj" mtl="#boat-mtl" wrapping position="34.39 0.04 0" n-mesh-collider="type: environment; convex: false">
         <a-animation attribute="position" dur="50000" easing="linear" repeat="indefinite" fill="forwards" from="34.39 0.9 -50" to="34.39 0.9 200"></a-animation>
       </cached-obj-model>
 
-      <cached-obj-model scale="3.5 3.5 3.5" src="#boat-obj" mtl="#boat-mtl" rotation="0 180 0" position="37.47 0.04 0" n-mesh-collider="type: environment; convex: false">
+      <cached-obj-model scale="3.5 3.5 3.5" src="#boat-obj" mtl="#boat-mtl" rotation="0 180 0" wrapping position="37.47 0.04 0" n-mesh-collider="type: environment; convex: false">
         <a-animation attribute="position" dur="40000" easing="linear" repeat="indefinite" fill="forwards" from="37.47 0.9 200" to="37.47 0.9 -50"></a-animation>
       </cached-obj-model>
-      <cached-obj-model scale="3.5 3.5 3.5" src="#boat-obj" mtl="#boat-mtl" rotation="0 180 0" position="37.47 0.04 0" n-mesh-collider="type: environment; convex: false">
+      <cached-obj-model scale="3.5 3.5 3.5" src="#boat-obj" mtl="#boat-mtl" rotation="0 180 0" wrapping position="37.47 0.04 0" n-mesh-collider="type: environment; convex: false">
         <a-animation attribute="position" dur="40000" easing="linear" repeat="indefinite" fill="forwards" from="37.47 0.9 150" to="37.47 0.9 -100"></a-animation>
       </cached-obj-model>
-      <cached-obj-model scale="3.5 3.5 3.5" src="#boat-obj" mtl="#boat-mtl" rotation="0 180 0" position="37.47 0.04 0" n-mesh-collider="type: environment; convex: false">
+      <cached-obj-model scale="3.5 3.5 3.5" src="#boat-obj" mtl="#boat-mtl" rotation="0 180 0" wrapping position="37.47 0.04 0" n-mesh-collider="type: environment; convex: false">
         <a-animation attribute="position" dur="40000" easing="linear" repeat="indefinite" fill="forwards" from="37.47 0.9 100" to="37.47 0.9 -150"></a-animation>
       </cached-obj-model>
-      <cached-obj-model scale="3.5 3.5 3.5" src="#boat-obj" mtl="#boat-mtl" rotation="0 180 0" position="37.47 0.04 0" n-mesh-collider="type: environment; convex: false">
+      <cached-obj-model scale="3.5 3.5 3.5" src="#boat-obj" mtl="#boat-mtl" rotation="0 180 0" wrapping position="37.47 0.04 0" n-mesh-collider="type: environment; convex: false">
         <a-animation attribute="position" dur="40000" easing="linear" repeat="indefinite" fill="forwards" from="37.47 0.9 50" to="37.47 0.9 -200"></a-animation>
       </cached-obj-model>
 
-      <cached-obj-model scale="3.5 3.5 3.5" src="#boat-obj" mtl="#boat-mtl" position="40.42 0.04 0" n-mesh-collider="type: environment; convex: false">
+      <cached-obj-model scale="3.5 3.5 3.5" src="#boat-obj" mtl="#boat-mtl" wrapping position="40.42 0.04 0" n-mesh-collider="type: environment; convex: false">
         <a-animation attribute="position" dur="60000" easing="linear" repeat="indefinite" fill="forwards" from="40.42 0.9 -200" to="40.42 0.9 50"></a-animation>
       </cached-obj-model>
-      <cached-obj-model scale="3.5 3.5 3.5" src="#boat-obj" mtl="#boat-mtl" position="40.42 0.04 0" n-mesh-collider="type: environment; convex: false">
+      <cached-obj-model scale="3.5 3.5 3.5" src="#boat-obj" mtl="#boat-mtl" wrapping position="40.42 0.04 0" n-mesh-collider="type: environment; convex: false">
         <a-animation attribute="position" dur="60000" easing="linear" repeat="indefinite" fill="forwards" from="40.42 0.9 -150" to="40.42 0.9 100"></a-animation>
       </cached-obj-model>
-      <cached-obj-model scale="3.5 3.5 3.5" src="#boat-obj" mtl="#boat-mtl" position="40.42 0.04 0" n-mesh-collider="type: environment; convex: false">
+      <cached-obj-model scale="3.5 3.5 3.5" src="#boat-obj" mtl="#boat-mtl" wrapping position="40.42 0.04 0" n-mesh-collider="type: environment; convex: false">
         <a-animation attribute="position" dur="60000" easing="linear" repeat="indefinite" fill="forwards" from="40.42 0.9 -100" to="40.42 0.9 150"></a-animation>
       </cached-obj-model>
-      <cached-obj-model scale="3.5 3.5 3.5" src="#boat-obj" mtl="#boat-mtl" position="40.42 0.04 0" n-mesh-collider="type: environment; convex: false">
+      <cached-obj-model scale="3.5 3.5 3.5" src="#boat-obj" mtl="#boat-mtl" wrapping position="40.42 0.04 0" n-mesh-collider="type: environment; convex: false">
         <a-animation attribute="position" dur="60000" easing="linear" repeat="indefinite" fill="forwards" from="40.42 0.9 -50" to="40.42 0.9 200"></a-animation>
       </cached-obj-model>
 
-      <cached-obj-model scale="3.5 3.5 3.5" src="#boat-obj" mtl="#boat-mtl" rotation="0 180 0" position="43.28 0.04 0" n-mesh-collider="type: environment; convex: false">
+      <cached-obj-model scale="3.5 3.5 3.5" src="#boat-obj" mtl="#boat-mtl" rotation="0 180 0" wrapping position="43.28 0.04 0" n-mesh-collider="type: environment; convex: false">
         <a-animation attribute="position" dur="45000" easing="linear" repeat="indefinite" fill="forwards" from="43.28 0.9 200" to="43.28 0.9 -50"></a-animation>
       </cached-obj-model>
-      <cached-obj-model scale="3.5 3.5 3.5" src="#boat-obj" mtl="#boat-mtl" rotation="0 180 0" position="43.28 0.04 0" n-mesh-collider="type: environment; convex: false">
+      <cached-obj-model scale="3.5 3.5 3.5" src="#boat-obj" mtl="#boat-mtl" rotation="0 180 0" wrapping position="43.28 0.04 0" n-mesh-collider="type: environment; convex: false">
         <a-animation attribute="position" dur="45000" easing="linear" repeat="indefinite" fill="forwards" from="43.28 0.9 150" to="43.28 0.9 -100"></a-animation>
       </cached-obj-model>
-      <cached-obj-model scale="3.5 3.5 3.5" src="#boat-obj" mtl="#boat-mtl" position="43.28 0.04 0" n-mesh-collider="type: environment; convex: false">
+      <cached-obj-model scale="3.5 3.5 3.5" src="#boat-obj" mtl="#boat-mtl" wrapping position="43.28 0.04 0" n-mesh-collider="type: environment; convex: false">
         <a-animation attribute="position" dur="45000" easing="linear" rotation="0 180 0" repeat="indefinite" fill="forwards" from="43.28 0.9 100" to="43.28 0.9 -150"></a-animation>
       </cached-obj-model>
-      <cached-obj-model scale="3.5 3.5 3.5" src="#boat-obj" mtl="#boat-mtl" rotation="0 180 0" position="43.28 0.04 0" n-mesh-collider="type: environment; convex: false">
+      <cached-obj-model scale="3.5 3.5 3.5" src="#boat-obj" mtl="#boat-mtl" rotation="0 180 0" wrapping position="43.28 0.04 0" n-mesh-collider="type: environment; convex: false">
         <a-animation attribute="position" dur="45000" easing="linear" repeat="indefinite" fill="forwards" from="43.28 0.9 50" to="43.28 0.9 -200"></a-animation>
       </cached-obj-model>
 
-      <cached-obj-model scale="3.5 3.5 3.5" src="#boat-obj" mtl="#boat-mtl" position="46.4 0.04 0" n-mesh-collider="type: environment; convex: false">
+      <cached-obj-model scale="3.5 3.5 3.5" src="#boat-obj" mtl="#boat-mtl" wrapping position="46.4 0.04 0" n-mesh-collider="type: environment; convex: false">
         <a-animation attribute="position" dur="65000" easing="linear" repeat="indefinite" fill="forwards" from="46.4 0.9 -200" to="46.4 0.9 50"></a-animation>
       </cached-obj-model>
-      <cached-obj-model scale="3.5 3.5 3.5" src="#boat-obj" mtl="#boat-mtl" position="46.4 0.04 0" n-mesh-collider="type: environment; convex: false">
+      <cached-obj-model scale="3.5 3.5 3.5" src="#boat-obj" mtl="#boat-mtl" wrapping position="46.4 0.04 0" n-mesh-collider="type: environment; convex: false">
         <a-animation attribute="position" dur="65000" easing="linear" repeat="indefinite" fill="forwards" from="46.4 0.9 -150" to="46.4 0.9 100"></a-animation>
       </cached-obj-model>
-      <cached-obj-model scale="3.5 3.5 3.5" src="#boat-obj" mtl="#boat-mtl" position="46.4 0.04 0" n-mesh-collider="type: environment; convex: false">
+      <cached-obj-model scale="3.5 3.5 3.5" src="#boat-obj" mtl="#boat-mtl" wrapping position="46.4 0.04 0" n-mesh-collider="type: environment; convex: false">
         <a-animation attribute="position" dur="65000" easing="linear" repeat="indefinite" fill="forwards" from="46.4 0.9 -100" to="46.4 0.9 150"></a-animation>
       </cached-obj-model>
-      <cached-obj-model scale="3.5 3.5 3.5" src="#boat-obj" mtl="#boat-mtl" position="46.4 0.04 0" n-mesh-collider="type: environment; convex: false">
+      <cached-obj-model scale="3.5 3.5 3.5" src="#boat-obj" mtl="#boat-mtl" wrapping position="46.4 0.04 0" n-mesh-collider="type: environment; convex: false">
         <a-animation attribute="position" dur="65000" easing="linear" repeat="indefinite" fill="forwards" from="46.4 0.9 -50" to="46.4 0.9 200"></a-animation>
       </cached-obj-model>
 
 
-      <cached-obj-model scale="1.9 1.9 1.9" src="#car1-obj" mtl="#car1-mtl" rotation="0 0 0" position="15.55 1.55 -10" n-mesh-collider="type: environment; convex: false">
+      <cached-obj-model scale="1.9 1.9 1.9" src="#car1-obj" mtl="#car1-mtl" rotation="0 0 0" wrapping position="15.55 1.55 -10" n-mesh-collider="type: environment; convex: false">
         <a-entity n-sound="src: car1.wav; loop: true; autoplay: true; volume: 0.1; rolloff: cosine; minDistance: 1; maxDistance: 25"></a-entity>
         <a-entity id="car1a" position="0 0.8 0" n-box-collider="isTrigger:true; type:environment; size: 1.1 1 3.2" n-container="capacity:1" wire="on: container-full; emit: crashing; targets: #car1b"></a-entity>
         <a-entity id="car1b" position="0 0 0" n-sound="src: crash.wav; on: crashing; volume: 1; rolloff: logarithmic; minDistance: 1; maxDistance: 80"></a-entity>
         <a-animation attribute="position" dur="10000" easing="linear" repeat="indefinite" fill="forwards" from="15.55 1.55 -200" to="15.55 1.55 50"></a-animation>
       </cached-obj-model>
-      <cached-obj-model scale="1.9 1.9 1.9" src="#car2-obj" mtl="#car2-mtl" rotation="0 0 0" position="15.55 1.55 -10" n-mesh-collider="type: environment; convex: false">
+      <cached-obj-model scale="1.9 1.9 1.9" src="#car2-obj" mtl="#car2-mtl" rotation="0 0 0" wrapping position="15.55 1.55 -10" n-mesh-collider="type: environment; convex: false">
       <a-entity n-sound="src: car1.wav; loop: true; autoplay: true; volume: 0.1; rolloff: cosine; minDistance: 1; maxDistance: 25"></a-entity>
         <a-animation attribute="position" dur="10000" easing="linear" repeat="indefinite" fill="forwards" from="15.55 1.55 -150" to="15.55 1.55 100"></a-animation>
         <a-entity id="car2a" position="0 0.8 0" n-box-collider="isTrigger:true; type:environment; size: 1.1 1 3.2" n-container="capacity:1" wire="on: container-full; emit: crashing; targets: #car2b"></a-entity>
         <a-entity id="car2b" position="0 0 0" n-sound="src: crash.wav; on: crashing; volume: 1; rolloff: logarithmic; minDistance: 1; maxDistance: 80"></a-entity>
       </cached-obj-model>
-      <cached-obj-model scale="1.9 1.9 1.9" src="#car3-obj" mtl="#car3-mtl" rotation="0 0 0" position="15.55 1.55 -10" n-mesh-collider="type: environment; convex: false">
+      <cached-obj-model scale="1.9 1.9 1.9" src="#car3-obj" mtl="#car3-mtl" rotation="0 0 0" wrapping position="15.55 1.55 -10" n-mesh-collider="type: environment; convex: false">
       <a-entity n-sound="src: car1.wav; loop: true; autoplay: true; volume: 0.1; rolloff: cosine; minDistance: 1; maxDistance: 25"></a-entity>
         <a-animation attribute="position" dur="10000" easing="linear" repeat="indefinite" fill="forwards" from="15.55 1.55 -100" to="15.55 1.55 150"></a-animation>
         <a-entity id="car3a" position="0 0.8 0" n-box-collider="isTrigger:true; type:environment; size: 1.1 1 3.2" n-container="capacity:1" wire="on: container-full; emit: crashing; targets: #car3b"></a-entity>
         <a-entity id="car3b" position="0 0 0" n-sound="src: crash.wav; on: crashing; volume: 1; rolloff: logarithmic; minDistance: 1; maxDistance: 80"></a-entity>
       </cached-obj-model>
-      <cached-obj-model scale="1.9 1.9 1.9" src="#car4-obj" mtl="#car4-mtl" rotation="0 0 0" position="15.55 1.55 -10" n-mesh-collider="type: environment; convex: false">
+      <cached-obj-model scale="1.9 1.9 1.9" src="#car4-obj" mtl="#car4-mtl" rotation="0 0 0" wrapping position="15.55 1.55 -10" n-mesh-collider="type: environment; convex: false">
       <a-entity n-sound="src: car1.wav; loop: true; autoplay: true; volume: 0.1; rolloff: cosine; minDistance: 1; maxDistance: 25"></a-entity>
         <a-animation attribute="position" dur="10000" easing="linear" repeat="indefinite" fill="forwards" from="15.55 1.55 -50" to="15.55 1.55 200"></a-animation>
         <a-entity id="car4a" position="0 0.8 0" n-box-collider="isTrigger:true; type:environment; size: 1.1 1 3.2" n-container="capacity:1" wire="on: container-full; emit: crashing; targets: #car4b"></a-entity>
         <a-entity id="car4b" position="0 0 0" n-sound="src: crash.wav; on: crashing; volume: 1; rolloff: logarithmic; minDistance: 1; maxDistance: 80"></a-entity>
       </cached-obj-model>
 
-      <cached-obj-model scale="1.9 1.9 1.9" src="#car2-obj" mtl="#car2-mtl" rotation="0 180 0" position="18.87 1.55 -10" n-mesh-collider="type: environment; convex: false">
+      <cached-obj-model scale="1.9 1.9 1.9" src="#car2-obj" mtl="#car2-mtl" rotation="0 180 0" wrapping position="18.87 1.55 -10" n-mesh-collider="type: environment; convex: false">
       <a-entity n-sound="src: car1.wav; loop: true; autoplay: true; volume: 0.1; rolloff: cosine; minDistance: 1; maxDistance: 25"></a-entity>
         <a-animation attribute="position" dur="8000" easing="linear" repeat="indefinite" fill="forwards" from="18.87 1.55 200" to="18.87 1.55 -50"></a-animation>
         <a-entity id="car5a" position="0 0.8 0" n-box-collider="isTrigger:true; type:environment; size: 1.1 1 3.2" n-container="capacity:1" wire="on: container-full; emit: crashing; targets: #car5b"></a-entity>
         <a-entity id="car5b" position="0 0 0" n-sound="src: crash.wav; on: crashing; volume: 1; rolloff: logarithmic; minDistance: 1; maxDistance: 80"></a-entity>
       </cached-obj-model>
-      <cached-obj-model scale="1.9 1.9 1.9" src="#car1-obj" mtl="#car1-mtl" rotation="0 180 0" position="18.87 1.55 -10" n-mesh-collider="type: environment; convex: false">
+      <cached-obj-model scale="1.9 1.9 1.9" src="#car1-obj" mtl="#car1-mtl" rotation="0 180 0" wrapping position="18.87 1.55 -10" n-mesh-collider="type: environment; convex: false">
       <a-entity n-sound="src: car1.wav; loop: true; autoplay: true; volume: 0.1; rolloff: cosine; minDistance: 1; maxDistance: 25"></a-entity>
         <a-animation attribute="position" dur="8000" easing="linear" repeat="indefinite" fill="forwards" from="18.87 1.55 150" to="18.87 1.55 -100"></a-animation>
         <a-entity id="car6a" position="0 0.8 0" n-box-collider="isTrigger:true; type:environment; size: 1.1 1 3.2" n-container="capacity:1" wire="on: container-full; emit: crashing; targets: #car6b"></a-entity>
         <a-entity id="car6b" position="0 0 0" n-sound="src: crash.wav; on: crashing; volume: 1; rolloff: logarithmic; minDistance: 1; maxDistance: 80"></a-entity>
       </cached-obj-model>
-      <cached-obj-model scale="1.9 1.9 1.9" src="#car4-obj" mtl="#car4-mtl" rotation="0 180 0" position="18.87 1.55 -10" n-mesh-collider="type: environment; convex: false">
+      <cached-obj-model scale="1.9 1.9 1.9" src="#car4-obj" mtl="#car4-mtl" rotation="0 180 0" wrapping position="18.87 1.55 -10" n-mesh-collider="type: environment; convex: false">
       <a-entity n-sound="src: car1.wav; loop: true; autoplay: true; volume: 0.1; rolloff: cosine; minDistance: 1; maxDistance: 25"></a-entity>
         <a-animation attribute="position" dur="8000" easing="linear" repeat="indefinite" fill="forwards" from="18.87 1.55 100" to="18.87 1.55 -150"></a-animation>
         <a-entity id="car7a" position="0 0.8 0" n-box-collider="isTrigger:true; type:environment; size: 1.1 1 3.2" n-container="capacity:1" wire="on: container-full; emit: crashing; targets: #car7b"></a-entity>
         <a-entity id="car7b" position="0 0 0" n-sound="src: crash.wav; on: crashing; volume: 1; rolloff: logarithmic; minDistance: 1; maxDistance: 80"></a-entity>
       </cached-obj-model>
-      <cached-obj-model scale="1.9 1.9 1.9" src="#car3-obj" mtl="#car3-mtl" rotation="0 180 0" position="18.87 1.55 -10" n-mesh-collider="type: environment; convex: false">
+      <cached-obj-model scale="1.9 1.9 1.9" src="#car3-obj" mtl="#car3-mtl" rotation="0 180 0" wrapping position="18.87 1.55 -10" n-mesh-collider="type: environment; convex: false">
       <a-entity n-sound="src: car1.wav; loop: true; autoplay: true; volume: 0.1; rolloff: cosine; minDistance: 1; maxDistance: 25"></a-entity>
         <a-animation attribute="position" dur="8000" easing="linear" repeat="indefinite" fill="forwards" from="18.87 1.55 50" to="18.87 1.55 -200"></a-animation>
         <a-entity id="car8a" position="0 0.8 0" n-box-collider="isTrigger:true; type:environment; size: 1.1 1 3.2" n-container="capacity:1" wire="on: container-full; emit: crashing; targets: #car8b"></a-entity>
         <a-entity id="car8b" position="0 0 0" n-sound="src: crash.wav; on: crashing; volume: 1; rolloff: logarithmic; minDistance: 1; maxDistance: 80"></a-entity>
       </cached-obj-model>
 
-      <cached-obj-model scale="1.9 1.9 1.9" src="#car4-obj" mtl="#car4-mtl" rotation="0 0 0" position="22.23 1.55 -10" n-mesh-collider="type: environment; convex: false">
+      <cached-obj-model scale="1.9 1.9 1.9" src="#car4-obj" mtl="#car4-mtl" rotation="0 0 0" wrapping position="22.23 1.55 -10" n-mesh-collider="type: environment; convex: false">
       <a-entity n-sound="src: car1.wav; loop: true; autoplay: true; volume: 0.1; rolloff: cosine; minDistance: 1; maxDistance: 25"></a-entity>
         <a-animation attribute="position" dur="9500" easing="linear" repeat="indefinite" fill="forwards" from="22.23 1.55 -200" to="22.23 1.55 50"></a-animation>
         <a-entity id="car9a" position="0 0.8 0" n-box-collider="isTrigger:true; type:environment; size: 1.1 1 3.2" n-container="capacity:1" wire="on: container-full; emit: crashing; targets: #car9b"></a-entity>
         <a-entity id="car9b" position="0 0 0" n-sound="src: crash.wav; on: crashing; volume: 1; rolloff: logarithmic; minDistance: 1; maxDistance: 80"></a-entity>
       </cached-obj-model>
-      <cached-obj-model scale="1.9 1.9 1.9" src="#car3-obj" mtl="#car3-mtl" rotation="0 0 0" position="22.23 1.55 -10" n-mesh-collider="type: environment; convex: false">
+      <cached-obj-model scale="1.9 1.9 1.9" src="#car3-obj" mtl="#car3-mtl" rotation="0 0 0" wrapping position="22.23 1.55 -10" n-mesh-collider="type: environment; convex: false">
       <a-entity n-sound="src: car1.wav; loop: true; autoplay: true; volume: 0.1; rolloff: cosine; minDistance: 1; maxDistance: 25"></a-entity>
         <a-animation attribute="position" dur="9500" easing="linear" repeat="indefinite" fill="forwards" from="22.23 1.55 -150" to="22.23 1.55 100"></a-animation>
         <a-entity id="car11a" position="0 0.8 0" n-box-collider="isTrigger:true; type:environment; size: 1.1 1 3.2" n-container="capacity:1" wire="on: container-full; emit: crashing; targets: #car11b"></a-entity>
         <a-entity id="car11b" position="0 0 0" n-sound="src: crash.wav; on: crashing; volume: 1; rolloff: logarithmic; minDistance: 1; maxDistance: 80"></a-entity>
       </cached-obj-model>
-      <cached-obj-model scale="1.9 1.9 1.9" src="#car1-obj" mtl="#car1-mtl" rotation="0 0 0" position="22.23 1.55 -10" n-mesh-collider="type: environment; convex: false">
+      <cached-obj-model scale="1.9 1.9 1.9" src="#car1-obj" mtl="#car1-mtl" rotation="0 0 0" wrapping position="22.23 1.55 -10" n-mesh-collider="type: environment; convex: false">
       <a-entity n-sound="src: car1.wav; loop: true; autoplay: true; volume: 0.1; rolloff: cosine; minDistance: 1; maxDistance: 25"></a-entity>
         <a-animation attribute="position" dur="9500" easing="linear" repeat="indefinite" fill="forwards" from="22.23 1.55 -100" to="22.23 1.55 150"></a-animation>
         <a-entity id="car22a" position="0 0.8 0" n-box-collider="isTrigger:true; type:environment; size: 1.1 1 3.2" n-container="capacity:1" wire="on: container-full; emit: crashing; targets: #car22b"></a-entity>
         <a-entity id="car22b" position="0 0 0" n-sound="src: crash.wav; on: crashing; volume: 1; rolloff: logarithmic; minDistance: 1; maxDistance: 80"></a-entity>
       </cached-obj-model>
-      <cached-obj-model scale="1.9 1.9 1.9" src="#car2-obj" mtl="#car2-mtl" rotation="0 0 0" position="22.23 1.55 -10" n-mesh-collider="type: environment; convex: false">
+      <cached-obj-model scale="1.9 1.9 1.9" src="#car2-obj" mtl="#car2-mtl" rotation="0 0 0" wrapping position="22.23 1.55 -10" n-mesh-collider="type: environment; convex: false">
       <a-entity n-sound="src: car1.wav; loop: true; autoplay: true; volume: 0.1; rolloff: cosine; minDistance: 1; maxDistance: 25"></a-entity>
         <a-animation attribute="position" dur="9500" easing="linear" repeat="indefinite" fill="forwards" from="22.23 1.55 -50" to="22.23 1.55 200"></a-animation>
       </cached-obj-model>
 
-      <cached-obj-model scale="1.9 1.9 1.9" src="#car3-obj" mtl="#car3-mtl" rotation="0 180 0" position="25.55 1.55 -10" n-mesh-collider="type: environment; convex: false">
+      <cached-obj-model scale="1.9 1.9 1.9" src="#car3-obj" mtl="#car3-mtl" rotation="0 180 0" wrapping position="25.55 1.55 -10" n-mesh-collider="type: environment; convex: false">
       <a-entity n-sound="src: car1.wav; loop: true; autoplay: true; volume: 0.1; rolloff: cosine; minDistance: 1; maxDistance: 25"></a-entity>
         <a-animation attribute="position" dur="8500" easing="linear" repeat="indefinite" fill="forwards" from="25.55 1.55 200" to="25.55 1.55 -50"></a-animation>
         <a-entity id="car33a" position="0 0.8 0" n-box-collider="isTrigger:true; type:environment; size: 1.1 1 3.2" n-container="capacity:1" wire="on: container-full; emit: crashing; targets: #car33b"></a-entity>
         <a-entity id="car33b" position="0 0 0" n-sound="src: crash.wav; on: crashing; volume: 1; rolloff: logarithmic; minDistance: 1; maxDistance: 80"></a-entity>
       </cached-obj-model>
-      <cached-obj-model scale="1.9 1.9 1.9" src="#car2-obj" mtl="#car2-mtl" rotation="0 180 0" position="25.55 1.55 -10" n-mesh-collider="type: environment; convex: false">
+      <cached-obj-model scale="1.9 1.9 1.9" src="#car2-obj" mtl="#car2-mtl" rotation="0 180 0" wrapping position="25.55 1.55 -10" n-mesh-collider="type: environment; convex: false">
       <a-entity n-sound="src: car1.wav; loop: true; autoplay: true; volume: 0.1; rolloff: cosine; minDistance: 1; maxDistance: 25"></a-entity>
         <a-animation attribute="position" dur="8500" easing="linear" repeat="indefinite" fill="forwards" from="25.55 1.55 150" to="25.55 1.55 -100"></a-animation>
         <a-entity id="car44a" position="0 0.8 0" n-box-collider="isTrigger:true; type:environment; size: 1.1 1 3.2" n-container="capacity:1" wire="on: container-full; emit: crashing; targets: #car44b"></a-entity>
         <a-entity id="car44b" position="0 0 0" n-sound="src: crash.wav; on: crashing; volume: 1; rolloff: logarithmic; minDistance: 1; maxDistance: 80"></a-entity>
       </cached-obj-model>
-      <cached-obj-model scale="1.9 1.9 1.9" src="#car4-obj" mtl="#car4-mtl" rotation="0 180 0" position="25.55 1.55 -10" n-mesh-collider="type: environment; convex: false">
+      <cached-obj-model scale="1.9 1.9 1.9" src="#car4-obj" mtl="#car4-mtl" rotation="0 180 0" wrapping position="25.55 1.55 -10" n-mesh-collider="type: environment; convex: false">
       <a-entity n-sound="src: car1.wav; loop: true; autoplay: true; volume: 0.1; rolloff: cosine; minDistance: 1; maxDistance: 25"></a-entity>
         <a-animation attribute="position" dur="8500" easing="linear" repeat="indefinite" fill="forwards" from="25.55 1.55 100" to="25.55 1.55 -150"></a-animation>
         <a-entity id="car55a" position="0 0.8 0" n-box-collider="isTrigger:true; type:environment; size: 1.1 1 3.2" n-container="capacity:1" wire="on: container-full; emit: crashing; targets: #car55b"></a-entity>
         <a-entity id="car55b" position="0 0 0" n-sound="src: crash.wav; on: crashing; volume: 1; rolloff: logarithmic; minDistance: 1; maxDistance: 80"></a-entity>
       </cached-obj-model>
-      <cached-obj-model scale="1.9 1.9 1.9" src="#car1-obj" mtl="#car1-mtl" rotation="0 180 0" position="25.55 1.55 -10" n-mesh-collider="type: environment; convex: false">
+      <cached-obj-model scale="1.9 1.9 1.9" src="#car1-obj" mtl="#car1-mtl" rotation="0 180 0" wrapping position="25.55 1.55 -10" n-mesh-collider="type: environment; convex: false">
       <a-entity n-sound="src: car1.wav; loop: true; autoplay: true; volume: 0.1; rolloff: cosine; minDistance: 1; maxDistance: 25"></a-entity>
         <a-animation attribute="position" dur="8500" easing="linear" repeat="indefinite" fill="forwards" from="25.55 1.55 50" to="25.55 1.55 -200"></a-animation>
         <a-entity id="car66a" position="0 0.8 0" n-box-collider="isTrigger:true; type:environment; size: 1.1 1 3.2" n-container="capacity:1" wire="on: container-full; emit: crashing; targets: #car66b"></a-entity>
         <a-entity id="car66b" position="0 0 0" n-sound="src: crash.wav; on: crashing; volume: 1; rolloff: logarithmic; minDistance: 1; maxDistance: 80"></a-entity>
       </cached-obj-model>
 
-      <cached-obj-model scale="1.9 1.9 1.9" src="#car1-obj" mtl="#car1-mtl" rotation="0 0 0" position="29 1.55 -10" n-mesh-collider="type: environment; convex: false">
+      <cached-obj-model scale="1.9 1.9 1.9" src="#car1-obj" mtl="#car1-mtl" rotation="0 0 0" wrapping position="29 1.55 -10" n-mesh-collider="type: environment; convex: false">
       <a-entity n-sound="src: car1.wav; loop: true; autoplay: true; volume: 0.1; rolloff: cosine; minDistance: 1; maxDistance: 25"></a-entity>
         <a-animation attribute="position" dur="7500" easing="linear" repeat="indefinite" fill="forwards" from="29 1.55 -200" to="29 1.55 50"></a-animation>
         <a-entity id="car77a" position="0 0.8 0" n-box-collider="isTrigger:true; type:environment; size: 1.1 1 3.2" n-container="capacity:1" wire="on: container-full; emit: crashing; targets: #car77b"></a-entity>
         <a-entity id="car77b" position="0 0 0" n-sound="src: crash.wav; on: crashing; volume: 1; rolloff: logarithmic; minDistance: 1; maxDistance: 80"></a-entity>
       </cached-obj-model>
-      <cached-obj-model scale="1.9 1.9 1.9" src="#car4-obj" mtl="#car4-mtl" rotation="0 0 0" position="29 1.55 -10" n-mesh-collider="type: environment; convex: false">
+      <cached-obj-model scale="1.9 1.9 1.9" src="#car4-obj" mtl="#car4-mtl" rotation="0 0 0" wrapping position="29 1.55 -10" n-mesh-collider="type: environment; convex: false">
       <a-entity n-sound="src: car1.wav; loop: true; autoplay: true; volume: 0.1; rolloff: cosine; minDistance: 1; maxDistance: 25"></a-entity>
         <a-animation attribute="position" dur="7500" easing="linear" repeat="indefinite" fill="forwards" from="29 1.55 -150" to="29 1.55 100"></a-animation>
         <a-entity id="car88a" position="0 0.8 0" n-box-collider="isTrigger:true; type:environment; size: 1.1 1 3.2" n-container="capacity:1" wire="on: container-full; emit: crashing; targets: #car88b"></a-entity>
         <a-entity id="car88b" position="0 0 0" n-sound="src: crash.wav; on: crashing; volume: 1; rolloff: logarithmic; minDistance: 1; maxDistance: 80"></a-entity>
       </cached-obj-model>
-      <cached-obj-model scale="1.9 1.9 1.9" src="#car3-obj" mtl="#car3-mtl" rotation="0 0 0" position="29 1.55 -10" n-mesh-collider="type: environment; convex: false">
+      <cached-obj-model scale="1.9 1.9 1.9" src="#car3-obj" mtl="#car3-mtl" rotation="0 0 0" wrapping position="29 1.55 -10" n-mesh-collider="type: environment; convex: false">
       <a-entity n-sound="src: car1.wav; loop: true; autoplay: true; volume: 0.1; rolloff: cosine; minDistance: 1; maxDistance: 25"></a-entity>
         <a-animation attribute="position" dur="7500" easing="linear" repeat="indefinite" fill="forwards" from="29 1.55 -100" to="29 1.55 150"></a-animation>
         <a-entity id="car99a" position="0 0.8 0" n-box-collider="isTrigger:true; type:environment; size: 1.1 1 3.2" n-container="capacity:1" wire="on: container-full; emit: crashing; targets: #car99b"></a-entity>
         <a-entity id="car99b" position="0 0 0" n-sound="src: crash.wav; on: crashing; volume: 1; rolloff: logarithmic; minDistance: 1; maxDistance: 80"></a-entity>
       </cached-obj-model>
-      <cached-obj-model scale="1.9 1.9 1.9" src="#car2-obj" mtl="#car2-mtl" rotation="0 0 0" position="29 1.55 -10" n-mesh-collider="type: environment; convex: false">
+      <cached-obj-model scale="1.9 1.9 1.9" src="#car2-obj" mtl="#car2-mtl" rotation="0 0 0" wrapping position="29 1.55 -10" n-mesh-collider="type: environment; convex: false">
       <a-entity n-sound="src: car1.wav; loop: true; autoplay: true; volume: 0.1; rolloff: cosine; minDistance: 1; maxDistance: 25"></a-entity>
         <a-animation attribute="position" dur="7500" easing="linear" repeat="indefinite" fill="forwards" from="29 1.55 -50" to="29 1.55 200"></a-animation>
         <a-entity id="car12a" position="0 0.8 0" n-box-collider="isTrigger:true; type:environment; size: 1.1 1 3.2" n-container="capacity:1" wire="on: container-full; emit: crashing; targets: #car12b"></a-entity>
@@ -378,7 +377,7 @@
     </a-scene>
     <script>
     altspace.getUser().then(function(user){
-      document.querySelector('#menu1').setAttribute('n-text', {fontSize:3,  text: '<#a3a32d>Duck Crossing:  ' + user.displayName });
+      document.querySelector('#menu1').setAttribute('n-text', {fontSize:3,  text: '<#0000BB>Duck Crossing:  ' + user.displayName });
     });
     </script>
   </body>
