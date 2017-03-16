@@ -59,8 +59,9 @@
         <img id="duck-icon" src="duck.jpg"/>
         <img id="info-icon" src="info.jpg"/>
         <img id="orng" src="orng.jpg"/>
+        <img id="info1" src="info1.jpg"/>
 
-        <a-mixin id="map" geometry="primitive: plane" material="src: #info-icon" collapse-model scale="1.5 1.5 0.1"></a-mixin>
+        <a-mixin id="map" geometry="primitive: plane" material="src: #info1" collapse-model scale="1.5 1.5 0.1"></a-mixin>
         <a-mixin id="map-spine" rotation="0 0 0" n-skeleton-parent="part: spine;" position="0 0.65 -2" sync sync-n-skeleton-parent></a-mixin>
 
         <a-mixin id="duck" cached-obj-model="obj: #duck-obj; mtl: #duck-mtl" collapse-model scale="1 1 1"></a-mixin>
@@ -378,7 +379,7 @@
     </a-scene>
     <script>
     altspace.getUser().then(function(user){
-      document.querySelector('#menu1').setAttribute('n-text', {fontSize:3,  text: '<#606011>Duck Crossing:  ' + user.displayName });
+      document.querySelector('#menu1').setAttribute('n-text', {fontSize:3,  text: '<#ffffd3>Duck Crossing:  ' + user.displayName });
     });
     </script>
   </body>
